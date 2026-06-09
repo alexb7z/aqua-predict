@@ -10,10 +10,10 @@
 
 | Nome |
 |------|
-| Alex Bruno |
-| Carlos Henrique |
-| José Veríssimo |
-| Thallys Araújo |
+| Alex Bruno Duarte |
+| Carlos Henrique de Queiroz |
+| José Veríssimo Queima Rosca |
+| Thallys Araújo de Morais |
 
 ---
 
@@ -40,9 +40,6 @@ O projeto implementa e compara dois modelos de predição, utilizando o mesmo co
 | Hora do dia | Extraída da coluna `Time` |
 | Dia da semana | Extraído da coluna `Date` |
 | Consumo da última hora | Coluna `Consumption` (lag) |
-| Temperatura | Coluna `Temperature` |
-| Chuva | Coluna `Rain` |
-| Incidência solar | Coluna `Sun` |
 
 **Saída:** consumo previsto (em litros) para a próxima hora
 
