@@ -10,7 +10,7 @@
 
 | Nome | E-mail | GitHub |
 |------|--------|--------|
-| Alex Bruno Duarte | alex.duarte@alunos.ufersa.edu.br | [<img src="[https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg](https://uxwing.com/github-white-icon/)" width="16" style="vertical-align: middle;"> GitHub](https://github.com/alexb7z) |
+| Alex Bruno Duarte | alex.duarte@alunos.ufersa.edu.br | [<img src="https://uxwing.com/github-white-icon/" width="16" style="vertical-align: middle;"> GitHub](https://github.com/alexb7z) |
 | Carlos Henrique de Queiroz | carlos.queiroz53447@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/CarlossQueiroz) |
 | José Veríssimo de Oliveira Queiroz | jose.queiroz58390@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/JV-ANUBIS) |
 | Thallys Araújo de Morais | thallys.araujo@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/ThallysAM) |
