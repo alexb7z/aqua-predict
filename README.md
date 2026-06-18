@@ -1,5 +1,5 @@
 # 💧 AquaPredict
-### Sistema Inteligente de Previsão de Consumo para Reservatórios de Água
+### Sistema Inteligente de Previsão de Nível para Reservatórios de Água
 
 > Projeto Final — Disciplina de Sistemas Inteligentes  
 > Universidade Federal Rural do Semi-Árido (UFERSA)
@@ -8,158 +8,68 @@
 
 ## 👥 Autores
 
-| Nome |
-|------|
-| Alex Bruno Duarte |
-| Carlos Henrique de Queiroz |
-| José Veríssimo Queima Rosca |
-| Thallys Araújo de Morais |
+| Nome | E-mail | GitHub |
+|------|--------|--------|
+| Alex Bruno Duarte | alex.duarte@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/alexb7z) |
+| Carlos Henrique de Queiroz | carlos.queiroz53447@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/CarlossQueiroz) |
+| José Veríssimo de Oliveira Queiroz | jose.queiroz58390@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/JV-ANUBIS) |
+| Thallys Araújo de Morais | thallys.araujo@alunos.ufersa.edu.br | [<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" width="16" style="vertical-align: middle;"> GitHub](https://github.com/ThallysAM) |
 
 ---
 
 ## 📌 Sobre o Projeto
 
-Sistemas convencionais de gerenciamento de reservatórios operam de forma **reativa** — acionando bombas e válvulas apenas após a detecção de níveis críticos. Isso gera desperdício de energia, acionamentos desnecessários e risco de desabastecimento.
+Sistemas convencionais de gerenciamento de reservatórios operam de forma reativa, acionando bombas e válvulas apenas após a detecção de níveis críticos. Isso gera desperdício de energia, acionamentos intermitentes desnecessários e risco de desabastecimento.
 
-O **AquaPredict** é um sistema baseado em Inteligência Artificial que opera de forma **preditiva**, capaz de:
-
-- 📈 **Prever o consumo futuro** de água na próxima hora com base em padrões históricos
-- ⏱️ **Estimar o tempo** até o reservatório atingir nível crítico
-- 🔔 **Recomendar o acionamento antecipado** da bomba para evitar desabastecimento
+O **AquaPredict** é um sistema baseado em Inteligência Artificial que opera de forma proativa. Utilizando séries temporais de alta granularidade, o modelo é capaz de prever o nível de água com **1 hora de antecedência**, viabilizando o acionamento preventivo de bombas hidráulicas na borda (*edge computing*).
 
 ---
 
-## 🧠 Modelos Implementados
+## 🧠 Modelagem Preditiva
 
-O projeto implementa e compara dois modelos de predição, utilizando o mesmo conjunto de features e métricas para uma comparação justa.
+O projeto concentra-se em um único *notebook*, onde dois modelos são implementados e rigorosamente comparados sob as mesmas métricas de validação.
 
-### Entradas (comuns aos dois modelos)
+### Entradas e Saídas (Features)
 
-| Feature | Descrição |
-|--------|-----------|
-| Hora do dia | Extraída da coluna `Time` |
-| Dia da semana | Extraído da coluna `Date` |
-| Consumo da última hora | Coluna `Consumption` (lag) |
+Para que a rede neural aprendesse os padrões do sistema hídrico, os dados brutos passaram por uma engenharia de atributos focada em sazonalidade e histórico recente:
 
-**Saída:** consumo previsto (em litros) para a próxima hora
+| Variável | Tipo | Descrição |
+|--------|------|-----------|
+| Sazonalidade | Entrada | Hora, Minuto e Dia da Semana extraídos do `timestamp` |
+| Lags 1 a 4 | Entrada | Variáveis de memória que representam as 4 últimas leituras do sensor (última 1 hora) |
+| Target | Saída | Previsão do nível/estado do sistema hídrico para 4 intervalos no futuro (1 hora à frente) |
 
----
+### Algoritmos Comparados
 
-### 🔵 Modelo 1 — Regressão Linear
-
-`notebooks/AquaPredict_RegressaoLinear.ipynb`
-
-Modelo de referência (*baseline*) baseado em **Regressão Linear Múltipla**. Por ser um modelo mais simples e interpretável, serve como base de comparação para avaliar o ganho real obtido pela rede neural.
-
-### 🟠 Modelo 2 — MLP (Rede Neural)
-
-`notebooks/AquaPredict_MLP.ipynb`
-
-Modelo principal baseado em **Rede Neural MLP (Multilayer Perceptron)**. Capaz de capturar relações não-lineares entre as variáveis, espera-se que supere a Regressão Linear nas métricas de avaliação.
+- **Modelo Principal (MLP):** Uma Rede Neural Artificial do tipo *Multilayer Perceptron*. Projetada para lidar com picos agressivos de variação e extrair a dinâmica não-linear da série temporal.
+- **Baseline (Regressão Linear):** Modelo de Regressão Linear Múltipla implementado especificamente como linha de base estatística, servindo para comprovar a superioridade metodológica da IA na resolução do problema.
 
 ---
 
-### 📊 Comparação entre Modelos
+## 📊 Dataset
 
-Ambos os notebooks são avaliados com as mesmas métricas, permitindo comparação direta:
+Para o treinamento e teste, foi utilizado o contemporâneo **SOWEKI Water Demand Dataset** (publicado no Zenodo em abril de 2026).
 
-| Métrica | Descrição |
-|---------|-----------|
-| MAE | Erro Médio Absoluto |
-| RMSE | Raiz do Erro Quadrático Médio |
-| R² | Coeficiente de Determinação |
+* **Arquivo:** `soweki_wdd_1.csv`
+* **Estrutura:** Série temporal contínua
+* **Granularidade:** Intervalos curtos de 15 minutos, ideais para previsões preditivas de curtíssimo prazo e lógicas de acionamento de atuadores.
 
 ---
 
 ## 📂 Estrutura do Repositório
 
-```
+```text
 aquapredict/
 │
 ├── README.md
 ├── .gitignore
 │
 ├── data/
-│   └── waterconsumption_noNaN_fixedTimechange.csv
+│   └── soweki_wdd_1.csv
 │
 ├── docs/
-│   ├── Pitch.pptx
-│   └── artigo/
-│       └── AquaPredict_artigo.pdf
+│   ├── pitch.pptx
+│   └── artigo.pdf
 │
-└── notebooks/
-    ├── AquaPredict_RegressaoLinear.ipynb
-    └── AquaPredict_MLP.ipynb
-```
-
-| Caminho | Descrição |
-|--------|-----------|
-| `notebooks/AquaPredict_RegressaoLinear.ipynb` | Modelo baseline com Regressão Linear |
-| `notebooks/AquaPredict_MLP.ipynb` | Modelo principal com Rede Neural MLP |
-| `data/waterconsumption_noNaN_fixedTimechange.csv` | Dataset de consumo hídrico (46.032 registros horários) |
-| `docs/Pitch.pptx` | Apresentação oral do projeto |
-| `docs/artigo/AquaPredict_artigo.pdf` | Artigo científico sobre a solução desenvolvida |
-
----
-
-## 📊 Dataset
-
-**Arquivo:** `waterconsumption_noNaN_fixedTimechange.csv`  
-**Registros:** 46.032 leituras horárias (sem valores nulos)  
-**Período:** a partir de 01/01/2016
-
-| Coluna | Tipo | Descrição |
-|--------|------|-----------|
-| `Date` | string | Data da medição (dd/mm/aaaa) |
-| `Time` | string | Intervalo horário (ex: `00:00-01:00`) |
-| `Consumption` | int | Consumo de água no intervalo (litros) |
-| `Temperature` | float | Temperatura registrada (°C) |
-| `Rain` | float | Volume de chuva (mm) |
-| `Sun` | int | Incidência solar (0 ou 1) |
-
----
-
-## 🗒️ Estrutura dos Notebooks
-
-Ambos os notebooks seguem a mesma estrutura base, diferindo apenas na seção de implementação do modelo.
-
-1. **Introdução** — contextualização do problema e objetivos
-2. **Conjunto de Dados** — descrição das variáveis e carregamento
-3. **Análise Exploratória (EDA)** — visualização de padrões de consumo, temperatura, chuva e sol
-4. **Pré-processamento** — engenharia de features, normalização e divisão treino/teste
-5. **Implementação do Modelo** — Regressão Linear *ou* MLP (conforme o notebook)
-6. **Avaliação do Modelo** — métricas (MAE, RMSE, R²) e gráfico de previsão vs. real
-7. **Sistema de Recomendação** *(apenas no notebook MLP)* — tempo até nível crítico e lógica de acionamento
-8. **Conclusão**
-
----
-
-## ▶️ Como Executar
-
-1. Acesse o notebook desejado pelo Google Colab
-2. Faça upload do arquivo `data/waterconsumption_noNaN_fixedTimechange.csv` quando solicitado
-3. Execute as células sequencialmente (`Runtime > Run all`)
-
-> O projeto foi desenvolvido inteiramente em Python, utilizando Google Colab.
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- Python 3
-- NumPy / Pandas
-- Scikit-learn
-- Matplotlib / Seaborn
-- Google Colab
-
----
-
-## 📋 Avaliação
-
-Este projeto compõe a **Unidade III** da disciplina, com os seguintes critérios:
-
-| Item | Peso |
-|------|------|
-| (a) Mapeamento da problemática e solução via programação | 4 |
-| (b) Apresentação oral | 3 |
-| (c) Artigo escrito | 3 |
+└── notebook/
+    └── aquapredict.ipynb
