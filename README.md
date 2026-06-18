@@ -68,7 +68,6 @@ aquapredict/
 │   └── soweki_wdd_1.csv
 │
 ├── docs/
-│   ├── pitch.pptx
 │   └── artigo.pdf
 │
 └── notebook/
